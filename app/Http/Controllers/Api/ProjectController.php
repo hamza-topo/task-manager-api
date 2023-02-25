@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\Project;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProject;
+use App\Http\Resources\ProjectResource;
 use App\Services\ProjectService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class ProjectController extends Controller
 {
+    //TODO:validate all requests
     public function __construct(protected ProjectService $projectService)
     {
     }
@@ -24,6 +27,7 @@ class ProjectController extends Controller
                 'project' => $project,
             ]);
         } catch (\Exception $e) {
+            Log::info(['Unable to create project.', $e->getMessage()]);
             return response()->json(['error' => 'Unable to create project.'], 500);
         }
     }
@@ -67,6 +71,74 @@ class ProjectController extends Controller
         } catch (\Exception $e) {
             Log::info(['Unable to restore project', $e->getMessage()]);
             return response()->json(['error' => 'Unable to restore project.'], 500);
+        }
+    }
+    //TODO:validate this request
+    public function addMembers(Request $request, $projectId)
+    {
+        try {
+            $this->projectService->attachMembersToProject($projectId, $request->members);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Members attached to the project successfully',
+            ]);
+        } catch (\Exception $e) {
+            Log::info(['Unable to attach members to project', $e->getMessage()]);
+            return response()->json(['error' => 'Unable to attach members to project'], 500);
+        }
+    }
+
+    public function removeMembers(Request $request, int $projectId)
+    {
+        try {
+            $this->projectService->detachMembersFromProject($projectId, $request->members);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Members detached from the project successfully',
+            ]);
+        } catch (\Exception $e) {
+            Log::info(['Unable to detach members from project', $e->getMessage()]);
+            return response()->json(['error' => 'Unable to detach members from project'], 500);
+        }
+    }
+
+    public function getAll()
+    {
+        try {
+
+            return response()->json([
+                'status' => 'success',
+                'projects' => ProjectResource::collection($this->projectService->getAll()),
+            ]);
+        } catch (\Exception $e) {
+            Log::info(['Unable to get the list of projects', $e->getMessage()]);
+            return response()->json(['error' => 'Unable to get the list of projects'], 500);
+        }
+    }
+
+    public function paginate(int $perPage = Project::PAGINATE)
+    {
+        $projects = $this->projectService->paginate($perPage);
+        $listProjects = $projects->map(function ($project) {
+            return new ProjectResource($project);
+        });
+        try {
+
+            return response()->json([
+                'status' => 'success',
+                'projects' => $listProjects->toArray(),
+                'meta' => [
+                    'current_page' => $projects->currentPage(),
+                    'from' => $projects->firstItem(),
+                    'last_page' => $projects->lastPage(),
+                    'per_page' => $projects->perPage(),
+                    'to' => $projects->lastItem(),
+                    'total' => $projects->total(),
+                ],
+            ]);
+        } catch (\Exception $e) {
+            Log::info(['Unable to get the list of projects', $e->getMessage()]);
+            return response()->json(['error' => 'Unable to get the list of projects'], 500);
         }
     }
 }

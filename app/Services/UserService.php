@@ -34,6 +34,11 @@ class UserService implements Service
         return User::OrderBy('id', 'desc')->get();
     }
 
+    public function getUsersById(array $usersIds = []):Collection
+    {
+        return User::whereIn('id',$usersIds)->get();
+    }
+
     public function login(Request $request): mixed
     {
         return   Auth::attempt($request->only('email', 'password'));

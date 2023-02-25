@@ -26,8 +26,8 @@ class Project extends Model
     /**
      * The owners that belong to the project.
      */
-    public function members(): MorphToMany
+    public function users(): MorphToMany
     {
-        return $this->morphToMany(User::class, 'member');
+        return $this->morphToMany(User::class, 'user','project_user');
     }
 }

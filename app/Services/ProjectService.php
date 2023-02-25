@@ -2,11 +2,16 @@
 
 namespace App\Services;
 
+use App\Enums\Project as EnumsProject;
 use App\Models\Project;
 use Illuminate\Support\Collection;
 
 class ProjectService implements Service
 {
+
+    public function __construct(protected UserService $userService)
+    {
+    }
 
     public function create(array $project = []): Project
     {
@@ -31,13 +36,31 @@ class ProjectService implements Service
         return Project::destroy($projectId);
     }
 
-    public function restore(int $projectId):bool 
+    public function restore(int $projectId): bool
     {
-       return Project::withTrashed()->find($projectId)->restore();
+        return Project::withTrashed()->find($projectId)->restore();
     }
 
     public function getAll(): Collection
     {
-        return Project::orderBy('id', 'des')->get();
+        return Project::orderBy('id', 'desc')->with('users')->get();
+    }
+
+    public function paginate(int $perPage = EnumsProject::PAGINATE)
+    {
+        return Project::paginate($perPage);
+    }
+
+    public function attachMembersToProject(int $projectId, array $memeberIds = [])
+    {
+        $project = $this->findById($projectId);
+        $memebers   = $this->userService->getUsersById($memeberIds);
+        return $project->users()->attach($memebers, ['project_id' => $project->id]);
+    }
+
+    public function detachMembersFromProject(int $projectId, array $memeberIds = [])
+    {
+        $project = $this->findById($projectId);
+        return  $project->users()->detach($memeberIds);
     }
 }
