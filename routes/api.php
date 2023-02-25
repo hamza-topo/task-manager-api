@@ -30,4 +30,8 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::controller(ProjectController::class)->prefix('projects')->group(function () {
     Route::post('create', 'store');
+    Route::put('/{projectId}','update');
+    Route::patch('/{projectId}','update');
+    Route::delete('/{projectId}','destroy');
+    Route::get('restore/{projectId}','restore');
 });

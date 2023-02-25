@@ -21,6 +21,7 @@ return new class extends Migration
             $table->tinyInteger('visibility')->default(Project::PUBLIC)->comment('private:' . Project::PRIVATE . ';public:' . Project::PUBLIC);
             $table->tinyInteger('status')->default(Project::PENDING)->comment('pending:' . Project::PENDING . ';in_progress:' . Project::IN_PROGRESS . ';completed:' . Project::COMPLETED);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

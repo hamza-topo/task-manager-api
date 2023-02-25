@@ -26,7 +26,8 @@ class StoreProject extends FormRequest
     {
         return [
             'name' => 'required|max:255',
-            'status' => 'required|in:' . Project::PENDING . ',' . Project::IN_PROGRESS . ',' . Project::COMPLETED . ','
+            'status' => 'in:' . Project::PENDING . ',' . Project::IN_PROGRESS . ',' . Project::COMPLETED . ',',
+            'visibility' => 'in:' . Project::PUBLIC . ',' . Project::PRIVATE,
         ];
     }
 }

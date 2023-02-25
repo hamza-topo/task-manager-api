@@ -26,6 +26,16 @@ class ProjectService implements Service
         return Project::findOrFail($projectId);
     }
 
+    public function delete(int $projectId): bool
+    {
+        return Project::destroy($projectId);
+    }
+
+    public function restore(int $projectId):bool 
+    {
+       return Project::withTrashed()->find($projectId)->restore();
+    }
+
     public function getAll(): Collection
     {
         return Project::orderBy('id', 'des')->get();
