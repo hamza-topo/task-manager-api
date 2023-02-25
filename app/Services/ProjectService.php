@@ -36,7 +36,7 @@ class ProjectService implements Service
         return Project::destroy($projectId);
     }
 
-    public function restore(int $projectId): bool
+    public function restore(int $projectId)
     {
         return Project::withTrashed()->find($projectId)->restore();
     }

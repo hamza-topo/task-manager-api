@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 
 class ProjectController extends Controller
 {
-    //TODO:validate all requests
+
     public function __construct(protected ProjectService $projectService)
     {
     }
@@ -74,7 +74,7 @@ class ProjectController extends Controller
         }
     }
     //TODO:validate this request
-    public function addMembers(Request $request, $projectId)
+    public function addMembers(Request $request, int $projectId)
     {
         try {
             $this->projectService->attachMembersToProject($projectId, $request->members);
@@ -123,7 +123,6 @@ class ProjectController extends Controller
             return new ProjectResource($project);
         });
         try {
-
             return response()->json([
                 'status' => 'success',
                 'projects' => $listProjects->toArray(),

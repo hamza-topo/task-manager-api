@@ -9,6 +9,10 @@ interface Service {
 
     public function findById(int $objectId);
 
+    public function delete(int $objectId);
+
+    public function restore(int $objectId);
+
     public function getAll();
 
 }
