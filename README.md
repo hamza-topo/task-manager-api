@@ -3,21 +3,6 @@
 | POST /login                           | Allows a user to log in to the API by providing their email and password.                        |
 |                                       | **Request parameters:** email, password.                                                        |
 |                                       | **Response:** A JSON object containing a JWT token that can be used to authenticate future requests.
-{
-    "status": "success",
-    "user": {
-        "id": 1,
-        "name": "Member 1",
-        "email": "xxxxxx@gmail.com",
-        "email_verified_at": null,
-        "created_at": "2023-02-26T18:18:18.000000Z",
-        "updated_at": "2023-02-26T18:18:18.000000Z"
-    },
-    "authorisation": {
-        "token": "xxxxxxxxxxxxxxxxxxxxxxxxxJodHRwOi8vMTI3LjAxxxxxxxxxxxxxx",
-        "type": "bearer"
-    }
-}
  |
 | POST /register                        | Allows a user to register for an account on the API by providing their name, email, and password. |
 |                                       | **Request parameters:** name, email, password.                                                   |
