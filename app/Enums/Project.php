@@ -10,4 +10,6 @@ class Project extends Enum
     const PENDING = 0;
     const IN_PROGRESS = 1;
     const COMPLETED = 2;
+    const PROJECT_LIST = 'projects_list_';
+    const CACHE_TIME = 40000;
 }

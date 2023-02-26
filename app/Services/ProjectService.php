@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\Project as EnumsProject;
 use App\Models\Project;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
 class ProjectService implements Service
 {
@@ -43,7 +44,9 @@ class ProjectService implements Service
 
     public function getAll(): Collection
     {
-        return Project::orderBy('id', 'desc')->with('users')->get();
+        return Cache::remember(EnumsProject::PROJECT_LIST, EnumsProject::CACHE_TIME, function () {
+            return Project::orderBy('id', 'desc')->with('users')->get();
+        });
     }
 
     public function paginate(int $perPage = EnumsProject::PAGINATE)
@@ -62,5 +65,10 @@ class ProjectService implements Service
     {
         $project = $this->findById($projectId);
         return  $project->users()->detach($memeberIds);
+    }
+
+    public function clearCache()
+    {
+        return  Cache::forget(EnumsProject::PROJECT_LIST);
     }
 }
