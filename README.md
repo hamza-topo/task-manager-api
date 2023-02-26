@@ -1,3 +1,9 @@
+## API Task Manager
+
+This repository contains the source code for the API Task Manager. In order to test the API endpoints, you can download the Postman collection file from the `Api-task-manager.postman_collection.json` file in the root directory. Import this file in your Postman app and you will have access to all the API endpoints. 
+
+
+
 | Endpoint                              | Description                                                                                      |
 |---------------------------------------|--------------------------------------------------------------------------------------------------|
 | POST /login                           | Allows a user to log in to the API by providing their email and password.                        |
