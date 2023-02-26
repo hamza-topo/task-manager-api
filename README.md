@@ -2,8 +2,7 @@
 |---------------------------------------|--------------------------------------------------------------------------------------------------|
 | POST /login                           | Allows a user to log in to the API by providing their email and password.                        |
 |                                       | **Request parameters:** email, password.                                                        |
-|                                       | **Response:** A JSON object containing a JWT token that can be used to authenticate future requests.
- |
+|                                       | **Response:** A JSON object containing a JWT token that can be used to authenticate future requests. |
 | POST /register                        | Allows a user to register for an account on the API by providing their name, email, and password. |
 |                                       | **Request parameters:** name, email, password.                                                   |
 |                                       | **Response:** A JSON object containing a JWT token that can be used to authenticate future requests. |
