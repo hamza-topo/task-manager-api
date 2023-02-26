@@ -59,6 +59,11 @@ class User extends Authenticatable implements JWTSubject
      */
     public function projects(): MorphToMany
     {
-        return $this->morphToMany(Project::class, 'user');
+        return $this->morphToMany(Project::class, 'user', 'project_user', 'user_id', 'project_id');
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
     }
 }

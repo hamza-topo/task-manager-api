@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Enums\Task as EnumsTask;
 use App\Models\Task;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
@@ -52,6 +53,12 @@ class TaskService implements Service
     public function getTasksByStatus(int $status): Collection
     {
         return Task::where('status', $status)->get();
+    }
+
+    public function filter(int $status, array $params):Collection
+    {
+        return Task::whereBetween('created_at', [$params['start_date'], $params['end_date'] ?? Carbon::now()])
+            ->get();
     }
 
     public function clearCache()

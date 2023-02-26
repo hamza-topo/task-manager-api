@@ -3,19 +3,29 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
-    public function open()
+
+    public function __construct(protected UserService $userService)
     {
-        $data = "This data is open and can be accessed without the client being authenticated";
-        return response()->json(compact('data'), 200);
     }
 
-    public function closed()
+    public function getTasks(int $userId)
     {
-        $data = "Only authorized users can see this";
-        return response()->json(compact('data'), 403);
+        try {
+            $user = $this->userService->findById($userId);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'List Of Task associated to member found successfully',
+                'tasks' => $user->tasks,
+            ]);
+        } catch (\Exception $e) {
+            Log::info(['Unable to find user tasks.', $e->getMessage()]);
+            return response()->json(['error' => 'Unable to find task of the given user ID.'], 500);
+        }
     }
 }

@@ -1,64 +1,42 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
-
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+| Endpoint                              | Description                                                                                      |
+|---------------------------------------|--------------------------------------------------------------------------------------------------|
+| POST /login                           | Allows a user to log in to the API by providing their email and password.                        |
+|                                       | **Request parameters:** email, password.                                                        |
+|                                       | **Response:** A JSON object containing a JWT token that can be used to authenticate future requests. |
+| POST /register                        | Allows a user to register for an account on the API by providing their name, email, and password. |
+|                                       | **Request parameters:** name, email, password.                                                   |
+|                                       | **Response:** A JSON object containing a JWT token that can be used to authenticate future requests. |
+| POST /logout                          | Allows a user to log out of the API and invalidate their current JWT token.                      |
+|                                       | **Request parameters:** None.                                                                    |
+|                                       | **Response:** A JSON object indicating that the user has been logged out.                       |
+| POST /refresh                         | Allows a user to refresh their JWT token, which can be useful if their current token is close to expiring. |
+|                                       | **Request parameters:** None.                                                                    |
+|                                       | **Response:** A JSON object containing a new JWT token that can be used to authenticate future requests. |
+| POST /projects/create                 | Allows a user to create a new project.                                                           |
+|                                       | **Request parameters:** project name.                                                            |
+|                                       | **Response:** A JSON object containing the ID of the newly created project.                      |
+| PUT /projects/{projectId}             | Allows a user to update an existing project by providing a new project name.                      |
+|                                       | **Request parameters:** project name.                                                            |
+|                                       | **Response:** A JSON object indicating whether the project was successfully updated.            |
+| PATCH /projects/{projectId}           | Same as PUT /projects/{projectId}.                                                               |
+| DELETE /projects/{projectId}          | Allows a user to delete an existing project.                                                     |
+|                                       | **Request parameters:** None.                                                                    |
+|                                       | **Response:** A JSON object indicating whether the project was successfully deleted.             |
+| GET /projects/restore/{projectId}     | Allows a user to restore a previously deleted project.                                           |
+|                                       | **Request parameters:** None.                                                                    |
+|                                       | **Response:** A JSON object indicating whether the project was successfully restored.            |
+| POST /projects/{projectId}/members/add | Allows a user to add a member to a project.                                                       |
+|                                       | **Request parameters:** email address of the member to be added.                                 |
+|                                       | **Response:** A JSON object indicating whether the member was successfully added.               |
+| POST /projects/{projectId}/members/remove | Allows a user to remove a member from a project.                                                |
+|                                          | **Request parameters:** email address of the member to be removed.                              |
+|                                          | **Response:** A JSON object indicating whether the member was successfully removed.            |
+| GET /projects                         | Retrieves a list of all projects.                                                                 |
+|                                       | **Request parameters:** None.                                                                    |
+|                                       | **Response:** A JSON object containing an array of all projects.                                 |
+| GET /projects/paginate/{perPage}      | Retrieves a paginated list of all projects.                                                      |
+|                                       | **Request parameters:** number of projects to retrieve per page.                                 |
+|                                       | **Response:** A JSON object containing an array of projects on the requested page.              |
+| POST /tasks/create                     | Allows a user to create a new task.                                                              |
+|                                       | **Request parameters:** task name, project ID.                                                   |
+|                                       | **Response:**

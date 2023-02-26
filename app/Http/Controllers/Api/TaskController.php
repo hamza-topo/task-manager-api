@@ -126,6 +126,8 @@ class TaskController extends Controller
     public function getTaskByStatus(int $status = Task::PENDING)
     {
         try {
+            if (request()->has('start_date') || request()->has('start_date'))
+                $tasks =  $this->taskService->filter($status, request()->all());
             $tasks = $this->taskService->getTasksByStatus($status);
             return response()->json([
                 'status' => 'success',
@@ -136,5 +138,10 @@ class TaskController extends Controller
             Log::info(['Unable to get Tasks with The given status:' . $status, $e->getMessage()]);
             return response()->json(['error' => 'Unable to get Tasks with The given status:' . $status], 500);
         }
+    }
+
+    public function filter(Request $request)
+    {
+        dd($request->all());
     }
 }

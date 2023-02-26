@@ -51,10 +51,9 @@ Route::controller(TaskController::class)->prefix('tasks')->group(function () {
     Route::get('restore/{taskId}', 'restore');
     Route::get('/', 'getAll');
     Route::get('/paginate/{perPage}', 'paginate');
-    Route::get('/status/{status}','getTaskByStatus');
+    Route::get('/status/{status}', 'getTaskByStatus');
 });
 
-Route::controller(UserController::class)->middleware('jwt.verify')->group(function() {
-    // Route::get('user', 'open');
-    // Route::get('closed', 'closed');
+Route::controller(UserController::class)->prefix('members')->middleware('jwt.verify')->group(function () {
+    Route::get('/{userId}/tasks', 'getTasks');
 });

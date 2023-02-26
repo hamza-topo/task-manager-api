@@ -26,7 +26,7 @@ class UserService implements Service
 
     public function findById(int $userId): User
     {
-        return User::findOrFail($userId);
+        return User::with('projects')->with('tasks')->findOrFail($userId);
     }
 
     public function delete(int $userId)
