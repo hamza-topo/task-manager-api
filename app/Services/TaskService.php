@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\Task as EnumsTask;
 use App\Models\Task;
 use Illuminate\Support\Collection;
 
@@ -22,7 +23,7 @@ class TaskService implements Service
 
     public function findById(int $taskId): Task
     {
-        return Task::findOrFail($taskId);
+        return Task::with('user')->with('project')->findOrFail($taskId);
     }
 
     public function delete(int $taskId):bool
@@ -38,6 +39,11 @@ class TaskService implements Service
     public function getAll(): Collection
     {
         return Task::OrderBy('id', 'desc')->with('user')->with('project')->get();
+    }
+
+    public function paginate(int $perPage = EnumsTask::PAGINATE)
+    {
+        return Task::paginate($perPage);
     }
 
     public function getTasksByStatus(int $status):Collection

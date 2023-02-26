@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,4 +39,16 @@ Route::controller(ProjectController::class)->prefix('projects')->group(function 
     Route::post('{projectId}/members/remove', 'removeMembers');
     Route::get('/', 'getAll');
     Route::get('/paginate/{perPage}', 'paginate');
+});
+
+Route::controller(TaskController::class)->prefix('tasks')->group(function () {
+    Route::post('create', 'store');
+    Route::get('/{taskId}', 'show');
+    Route::put('/{taskId}', 'update');
+    Route::patch('/{taskId}', 'update');
+    Route::delete('/{taskId}', 'destroy');
+    Route::get('restore/{taskId}', 'restore');
+    Route::get('/', 'getAll');
+    Route::get('/paginate/{perPage}', 'paginate');
+    Route::get('/status/{status}','getTaskByStatus');
 });

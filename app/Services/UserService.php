@@ -29,14 +29,24 @@ class UserService implements Service
         return User::findOrFail($userId);
     }
 
+    public function delete(int $userId)
+    {
+        return User::destroy($userId);
+    }
+
+    public function restore(int $userId)
+    {
+        throw new \Exception("Restore method is disabled for UserService."); 
+    }
+
     public function getAll(): Collection
     {
         return User::OrderBy('id', 'desc')->get();
     }
 
-    public function getUsersById(array $usersIds = []):Collection
+    public function getUsersById(array $usersIds = []): Collection
     {
-        return User::whereIn('id',$usersIds)->get();
+        return User::whereIn('id', $usersIds)->get();
     }
 
     public function login(Request $request): mixed
