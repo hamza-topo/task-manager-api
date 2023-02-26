@@ -55,6 +55,6 @@ Route::controller(TaskController::class)->prefix('tasks')->group(function () {
 });
 
 Route::controller(UserController::class)->middleware('jwt.verify')->group(function() {
-    Route::get('user', 'open');
-    Route::get('closed', 'closed');
+    // Route::get('user', 'open');
+    // Route::get('closed', 'closed');
 });

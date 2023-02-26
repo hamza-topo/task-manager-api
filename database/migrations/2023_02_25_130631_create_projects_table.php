@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name',100);
             $table->text('description')->nullable();
             $table->tinyInteger('visibility')->default(Project::PUBLIC)->comment('private:' . Project::PRIVATE . ';public:' . Project::PUBLIC);
             $table->tinyInteger('status')->default(Project::PENDING)->comment('pending:' . Project::PENDING . ';in_progress:' . Project::IN_PROGRESS . ';completed:' . Project::COMPLETED);

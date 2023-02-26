@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('project_id');
-            $table->string('title');
+            $table->string('title',255);
             $table->tinyInteger('status')->default(Task::PENDING)->comment('pending:' . Task::PENDING . ';in_progress:' . Task::IN_PROGRESS . ';completed:' . Task::COMPLETED);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
