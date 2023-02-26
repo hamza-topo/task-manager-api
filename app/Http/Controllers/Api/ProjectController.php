@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\Project;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProjectMembersRequest;
+use App\Http\Requests\ProjectRequest;
 use App\Http\Requests\StoreProject;
 use App\Http\Resources\ProjectResource;
 use App\Services\ProjectService;
@@ -17,7 +19,7 @@ class ProjectController extends Controller
     {
     }
 
-    public function store(StoreProject $request)
+    public function store(ProjectRequest $request)
     {
         try {
             $project = $this->projectService->create($request->all());
@@ -32,7 +34,7 @@ class ProjectController extends Controller
         }
     }
 
-    public function update(Request $request, int $projectId)
+    public function update(ProjectRequest $request, int $projectId)
     {
         try {
             $this->projectService->edit($projectId, $request->all());
@@ -73,8 +75,8 @@ class ProjectController extends Controller
             return response()->json(['error' => 'Unable to restore project.'], 500);
         }
     }
-    //TODO:validate this request
-    public function addMembers(Request $request, int $projectId)
+
+    public function addMembers(ProjectMembersRequest $request, int $projectId)
     {
         try {
             $this->projectService->attachMembersToProject($projectId, $request->members);
@@ -88,7 +90,7 @@ class ProjectController extends Controller
         }
     }
 
-    public function removeMembers(Request $request, int $projectId)
+    public function removeMembers(ProjectMembersRequest $request, int $projectId)
     {
         try {
             $this->projectService->detachMembersFromProject($projectId, $request->members);

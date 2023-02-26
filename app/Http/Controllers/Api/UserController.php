@@ -16,6 +16,6 @@ class UserController extends Controller
     public function closed()
     {
         $data = "Only authorized users can see this";
-        return response()->json(compact('data'), 200);
+        return response()->json(compact('data'), 403);
     }
 }

@@ -4,8 +4,9 @@ namespace App\Http\Requests;
 
 use App\Enums\Project;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
-class StoreProject extends FormRequest
+class ProjectRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +15,7 @@ class StoreProject extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -28,6 +29,16 @@ class StoreProject extends FormRequest
             'name' => 'required|max:255',
             'status' => 'in:' . Project::PENDING . ',' . Project::IN_PROGRESS . ',' . Project::COMPLETED . ',',
             'visibility' => 'in:' . Project::PUBLIC . ',' . Project::PRIVATE,
+        ];
+    }
+
+    public function messages()
+    {
+        /** we can use translated message __('message') */
+        return [
+            'name.required' => 'The Field Name is empty !',
+            'status.in' => 'The Given Value for status is invalid',
+            'visibility.in' => 'The Given Value for Visibility is invalid',
         ];
     }
 }
